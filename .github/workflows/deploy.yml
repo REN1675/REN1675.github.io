@@ -18,13 +18,32 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+
+      - name: 安装pnpm 📦
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: 获取pnpm缓存路径
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: 设置缓存
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: 安装依赖 📦
-        run: npm ci
+        run: pnpm install
 
       - name: 构建网站 🔧
-        run: npm run build
+        run: pnpm build
 
       - name: 部署到GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
