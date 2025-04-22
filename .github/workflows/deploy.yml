@@ -45,9 +45,13 @@ jobs:
       - name: 构建网站 🔧
         run: pnpm build
 
+      - name: 创建.nojekyll文件
+        run: touch out/.nojekyll
+
       - name: 部署到GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: out # 部署本地已构建的out目录
           branch: main # 部署到main分支
-          clean: true # 清理旧文件 
+          clean-exclude: .git/** # 只保留.git目录
+          force: true # 强制覆盖 
