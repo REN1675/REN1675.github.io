@@ -52,6 +52,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: out # 部署本地已构建的out目录
-          branch: main # 部署到main分支
-          clean-exclude: .git/** # 只保留.git目录
-          force: true # 强制覆盖 
+          branch: gh-pages # 部署到gh-pages分支
+          clean: true # 清理旧文件 
