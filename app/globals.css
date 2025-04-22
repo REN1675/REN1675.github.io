@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 270 70% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 270 30% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 270 30% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 270 30% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 270 31.8% 91.4%;
+    --input: 270 31.8% 91.4%;
+    --ring: 270 70% 50%;
+    --radius: 0.5rem;
+
+    /* 自定义颜色变量 - 浅色模式 */
+    --text-primary: 222.2 84% 4.9%;
+    --text-secondary: 215.4 16.3% 46.9%;
+    --bg-card: 0 0% 100%;
+    --bg-card-hover: 270 70% 97%;
+    --nav-bg: 0 0% 100%;
+    --nav-text: 222.2 84% 4.9%;
+    --nav-active: 270 70% 50%;
+    --gradient-start: 270 70% 97%;
+    --gradient-end: 262 83% 98%;
+
+    /* 重置滚动条设置，采用固定布局方式 */
+    --scrollbar-width: 0px;
+    /* 移除自定义滚动条设置 */
+    scrollbar-width: auto;
+    overflow-y: auto; /* 使用auto而不是scroll */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 270 70% 60%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 270 70% 60%;
+
+    /* 自定义颜色变量 - 深色模式 */
+    --text-primary: 210 40% 98%;
+    --text-secondary: 215 20.2% 65.1%;
+    --bg-card: 217.2 32.6% 17.5%;
+    --bg-card-hover: 270 30% 25%;
+    --nav-bg: 222.2 84% 4.9%;
+    --nav-text: 210 40% 98%;
+    --nav-active: 270 70% 75%;
+    --gradient-start: 270 30% 20%;
+    --gradient-end: 262 83% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html, body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    /* 重置所有可能导致偏移的属性 */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem; /* 为固定导航栏留出空间 */
+}
+
+/* 页面载入时计算滚动条宽度并设置固定布局 */
+html.scrollbar-measured {
+  /* 已经在html中设置了overflow-y，这里不需要重复设置 */
+}
+
+/* 添加一些全局动画类 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(147, 51, 234, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(147, 51, 234, 0);
+  }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: currentColor }
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  60% {
+    left: 125%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideInFromBottom 0.5s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s infinite;
+}
+
+.animate-blink-caret {
+  animation: blink-caret 1.2s step-end infinite;
+}
+
+.animate-shine {
+  animation: shine 8s ease-in-out infinite;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.5), 
+    transparent
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.gradient-bg {
+  @apply bg-gradient-to-br from-purple-100/40 to-indigo-100/40 dark:from-purple-900/40 dark:to-indigo-900/40;
+}
+
+/* 平滑过渡效果 */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 卡片悬浮效果 */
+.hover-card {
+  transition: all 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px -5px rgba(91, 33, 182, 0.3);
+}
+
+/* 进度条动画 */
+.progress-bar {
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 渐变文字 */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-purple-300 dark:to-blue-400;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: max-content;
+  vertical-align: baseline;
+}
+
+.gradient-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  animation: shine 4s ease-in-out infinite;
+}
+
+.dark .gradient-text::before {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* 自适应高度的首页部分 */
+.hero-section {
+  min-height: calc(100vh - 4rem);
+  display: flex;
+  align-items: center;
+}
+
+/* 图像悬浮容器 */
+.image-container {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(91, 33, 182, 0.3);
+  transition: all 0.5s ease;
+}
+
+.image-container:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 0 40px rgba(91, 33, 182, 0.5);
+}
+
+.image-container::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(45deg, #9333ea, #3b82f6);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.6;
+  animation: pulse 3s infinite;
+}
+
+/* 主题切换相关样式 */
+.theme-card {
+  @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-800;
+}
+
+.text-adaptive {
+  @apply text-gray-900 dark:text-white transition-colors duration-300;
+}
+
+.text-adaptive-secondary {
+  @apply text-gray-600 dark:text-gray-300 transition-colors duration-300;
+}
+
+/* 添加对话框打开时的全局样式 */
+.dialog-open {
+  /* 使用一种完全不同的方法处理对话框打开时的滚动 */
+  overflow: hidden;
+}
+
+/* 对话框内容样式 */
+[role="dialog"] {
+  /* 确保对话框内容可以滚动，而不影响页面布局 */
+  overflow-y: auto;
+  /* 设置最大高度以允许在小屏幕上滚动查看更多内容 */
+  max-height: 90vh;
+}

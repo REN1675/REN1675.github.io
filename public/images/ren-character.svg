@@ -1,0 +1,31 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .character {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 20;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+  
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333ea" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  
+  <g>
+    <!-- 任字的主要笔画 -->
+    <!-- 横 -->
+    <path class="character" d="M 100 120 L 400 120" />
+    <!-- 左边撇 -->
+    <path class="character" d="M 170 120 L 110 350" />
+    <!-- 右边捺 -->
+    <path class="character" d="M 320 120 L 400 380" />
+  </g>
+  
+  <!-- 光晕效果 -->
+  <circle cx="250" cy="250" r="220" fill="url(#gradient)" opacity="0.1" />
+</svg> 
