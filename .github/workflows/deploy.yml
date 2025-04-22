@@ -10,58 +10,25 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout 🛎️
+      - name: 检出代码 🛎️
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
-      - name: Setup Node.js
+      - name: 设置Node.js环境 ⚙️
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
+      - name: 安装依赖 📦
+        run: npm ci
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: 构建网站 🔧
+        run: npm run build
 
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
-        
-      - name: Build
-        run: pnpm build
-
-      - name: Deploy 🚀
+      - name: 部署到GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: out
-          branch: main
-          clean: true
-          clean-exclude: |
-            .github
-            node_modules
-            .gitignore
-            README.md
-            package.json
-            package-lock.json
-            pnpm-lock.yaml
-            next.config.mjs
-            tailwind.config.ts
-            postcss.config.mjs
-            tsconfig.json 
+          folder: out # 部署本地已构建的out目录
+          branch: main # 部署到main分支
+          clean: true # 清理旧文件 
