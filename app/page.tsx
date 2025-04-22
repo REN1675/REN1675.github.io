@@ -1078,12 +1078,12 @@ export default function Home() {
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">GitHub</h3>
                       <p className="text-gray-600 dark:text-gray-300 mb-2">查看我的网站项目</p>
                       <a 
-                        href="https://github.com/renyuyu" 
+                        href="https://github.com/REN1675/REN1675.github.io" 
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-indigo-600 dark:text-purple-300 hover:underline flex items-center gap-1"
                       >
-                        github.com/renyuyu
+                        github.com/REN1675
                         <ChevronRight className="h-4 w-4" />
                       </a>
                     </div>
