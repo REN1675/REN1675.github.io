@@ -1246,8 +1246,8 @@ export default function Home() {
                     </div>
                     
                     {/* 动态技能详情卡片 - 放在右侧，在小屏幕上改为底部 */}
-                    <div className="md:w-1/2 w-full flex items-center justify-center mt-4 md:mt-0">
-                      <div className="relative w-full max-w-md min-h-[200px] md:min-h-[200px] h-[250px] flex items-center justify-center overflow-hidden"
+                    <div className="md:w-1/2 w-full flex items-center justify-center mt-2 md:mt-0">
+                      <div className="relative w-full max-w-md min-h-[200px] md:min-h-[200px] h-[220px] flex items-center justify-center overflow-hidden"
                       >
                         {orbitSkills.map((skill) => (
                           <div 
