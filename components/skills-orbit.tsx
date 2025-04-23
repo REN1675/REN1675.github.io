@@ -70,19 +70,31 @@ export function SkillsOrbit({
     setSkillsWithPositions(skillsWithPos)
   }, [skills, innerRadius, outerRadius])
   
-  // 优化后的动画旋转，使用requestAnimationFrame的时间参数
+  // 优化的动画旋转，降低更新频率并使用更平滑的插值
   useEffect(() => {
     let rotationValue = rotation
+    let accumulatedTime = 0;
+    const updateInterval = 30; // 每30ms更新一次状态，减少重绘频率
     
     const animate = (timestamp: number) => {
       if (!lastTimeRef.current) lastTimeRef.current = timestamp
       
-      // 计算帧间时间差，确保在不同设备/浏览器上保持一致的旋转速度
+      // 计算帧间时间差
       const deltaTime = timestamp - lastTimeRef.current
-      rotationValue += rotationSpeed * (deltaTime / 16.66) // 基于60fps标准化速度
-      
       lastTimeRef.current = timestamp
-      setRotation(rotationValue)
+      
+      // 累积时间
+      accumulatedTime += deltaTime;
+      
+      // 计算旋转增量，保持连贯性
+      rotationValue += rotationSpeed * (deltaTime / 16.66)
+      
+      // 只在累积时间达到更新间隔时更新DOM
+      if (accumulatedTime >= updateInterval) {
+        setRotation(rotationValue)
+        accumulatedTime = 0;
+      }
+      
       animationRef.current = requestAnimationFrame(animate)
     }
     
@@ -229,11 +241,13 @@ export function SkillsOrbit({
         return (
           <div
             key={skill.name}
-            className="absolute z-10 flex flex-col items-center transition-all duration-300"
+            className="absolute z-10 flex flex-col items-center"
             style={{
               transform: `translate(${x}px, ${y}px)`,
-              transition: "transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0)", // 添加平滑过渡
-              willChange: "transform" // 性能优化，告知浏览器元素将被频繁变换
+              transition: "transform 0.5s cubic-bezier(0.17, 0.67, 0.41, 0.99)", // 使用更平滑的贝塞尔曲线
+              willChange: "transform", // 性能优化
+              transformStyle: "preserve-3d", // 提高GPU渲染性能
+              backfaceVisibility: "hidden" // 防止回流问题
             }}
             onMouseEnter={() => handleSkillMouseEnter(skill.name)}
             onMouseLeave={handleSkillMouseLeave}

@@ -19,7 +19,7 @@ export function FixedBackground() {
     : "/images/gradient-background-light.svg"
   
   return (
-    <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden">
+    <div className="fixed top-0 left-0 right-0 w-full h-[100vh] -z-10 overflow-hidden pointer-events-none">
       <div className="relative w-full h-full">
         {mounted && (
           <Image 

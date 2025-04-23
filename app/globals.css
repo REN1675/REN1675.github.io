@@ -92,6 +92,14 @@
     width: 100%;
     max-width: 100%;
     position: relative;
+    scroll-behavior: smooth;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+  }
+
+  html.dark body {
+    background-color: rgb(17, 24, 39); /* 与灰色900相同的颜色 */
   }
 }
 
@@ -341,4 +349,58 @@ html.scrollbar-measured {
   overflow-y: auto;
   /* 设置最大高度以允许在小屏幕上滚动查看更多内容 */
   max-height: 90vh;
+  border-radius: 0.75rem;
+}
+
+[role="dialog"] > div {
+  border-radius: inherit;
+}
+
+/* 对话框内部按钮和元素增加圆角 */
+[role="dialog"] button {
+  border-radius: 0.5rem;
+}
+
+[role="dialog"] img {
+  border-radius: 0.375rem;
+}
+
+/* 对话框关闭按钮悬浮效果 */
+[role="dialog"] [data-state="open"] {
+  transition: all 0.2s ease;
+}
+
+[role="dialog"] [data-state="open"]:hover {
+  background-color: rgba(124, 58, 237, 0.1);
+  transform: scale(1.05);
+}
+
+/* 自定义对话框位置，避免遮挡导航栏 */
+.dialog-content-custom-position {
+  position: fixed !important;
+  top: 60px !important; /* 调整与导航栏的距离，避免出现多余空白 */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  max-height: calc(100vh - 80px) !important; /* 调整最大高度以适应屏幕 */
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 8px 15px -6px rgba(0, 0, 0, 0.1) !important;
+  overflow: hidden !important;
+  margin-top: 0 !important; /* 移除上边距，避免出现多余空间 */
+  z-index: 100 !important; /* 确保对话框在最前面 */
+}
+
+@media (min-width: 640px) {
+  .dialog-content-custom-position {
+    top: 80px !important; /* 在大屏幕上稍微增加与导航栏的距离 */
+    border-radius: 1.25rem !important;
+  }
+}
+
+@layer utilities {
+  .full-width-bg {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
 }
