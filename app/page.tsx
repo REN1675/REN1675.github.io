@@ -959,7 +959,7 @@ export default function Home() {
 
             {/* 教育经历 Section */}
             <section id="education" className="py-16 relative">
-              <div className="absolute inset-0 full-width-bg bg-white/80 dark:bg-white/5"></div>
+              <div className="absolute inset-0 full-width-bg bg-white/80 dark:bg-gray-950"></div>
               <div className="container max-w-[1440px] mx-auto px-4 relative z-10">
                 <div className="flex items-center justify-center gap-2 mb-8">
                   <BookOpen className="h-6 w-6 text-indigo-500 dark:text-purple-400" />
@@ -1226,14 +1226,13 @@ export default function Home() {
               <div className="absolute inset-0 full-width-bg bg-transparent"></div>
               <div className="container max-w-[1440px] mx-auto px-4 relative z-10">
                 <div className="flex items-center justify-center gap-2 mb-8">
-                  <Code className="h-6 w-6 text-indigo-500 dark:text-purple-400" />
                   <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">技能专长</h2>
                 </div>
 
                 {/* 环绕技能展示 */}
                 <div className="mb-12">
                   <div className="relative flex flex-col md:flex-row">
-                    <div className="flex justify-center md:w-1/2">
+                    <div className="flex justify-center md:w-1/2 w-full">
                       <SkillsOrbit 
                         skills={orbitSkills} 
                         centerNode={{ 
@@ -1246,8 +1245,8 @@ export default function Home() {
                       />
                     </div>
                     
-                    {/* 动态技能详情卡片 - 放在右侧 */}
-                    <div className="md:w-1/2 flex items-center justify-center">
+                    {/* 动态技能详情卡片 - 放在右侧，在小屏幕上改为底部 */}
+                    <div className="md:w-1/2 w-full flex items-center justify-center mt-4 md:mt-0">
                       <div className="relative w-full max-w-md min-h-[200px] flex items-center justify-center">
                         {orbitSkills.map((skill) => (
                           <div 

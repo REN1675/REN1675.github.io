@@ -8,7 +8,21 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "任瑜瑜的个人网站",
   description: "任瑜瑜的个人网站",
-  generator: 'ryy'
+  generator: 'ryy',
+  icons: {
+    icon: [
+      {
+        url: '/images/网站.svg',
+        type: 'image/svg+xml',
+      }
+    ],
+    apple: [
+      {
+        url: '/images/网站.svg',
+        type: 'image/svg+xml',
+      }
+    ]
+  }
 }
 
 export default function RootLayout({

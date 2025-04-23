@@ -41,8 +41,51 @@ export function SkillsOrbit({
   const [skillsWithPositions, setSkillsWithPositions] = useState<SkillNode[]>(skills)
   const animationRef = useRef<number | null>(null)
   const lastTimeRef = useRef<number>(0)
+  const [windowWidth, setWindowWidth] = useState(0)
+  const [responsiveInnerRadius, setResponsiveInnerRadius] = useState(innerRadius)
+  const [responsiveOuterRadius, setResponsiveOuterRadius] = useState(outerRadius)
   
-  // 计算位置
+  // 初始化窗口宽度并添加窗口尺寸变化监听
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // 初始化窗口宽度
+      setWindowWidth(window.innerWidth)
+      
+      // 计算响应式半径
+      const updateRadii = () => {
+        const width = window.innerWidth
+        setWindowWidth(width)
+        
+        // 为不同屏幕尺寸设置不同半径
+        if (width < 480) { // 手机屏幕
+          setResponsiveInnerRadius(Math.min(80, innerRadius * 0.65))
+          setResponsiveOuterRadius(Math.min(140, outerRadius * 0.65))
+        } else if (width < 768) { // 平板小屏
+          setResponsiveInnerRadius(Math.min(100, innerRadius * 0.8))
+          setResponsiveOuterRadius(Math.min(180, outerRadius * 0.8))
+        } else if (width < 1024) { // 平板大屏
+          setResponsiveInnerRadius(innerRadius * 0.9)
+          setResponsiveOuterRadius(outerRadius * 0.9)
+        } else { // 桌面
+          setResponsiveInnerRadius(innerRadius)
+          setResponsiveOuterRadius(outerRadius)
+        }
+      }
+      
+      // 初始计算
+      updateRadii()
+      
+      // 监听窗口大小变化
+      const handleResize = () => {
+        updateRadii()
+      }
+      
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, [innerRadius, outerRadius])
+  
+  // 计算位置 - 使用响应式半径
   useEffect(() => {
     const totalSkills = skills.length
     const halfSkills = Math.ceil(totalSkills / 2)
@@ -54,8 +97,8 @@ export function SkillsOrbit({
         ? (index * (2 * Math.PI / halfSkills)) 
         : ((index - halfSkills) * (2 * Math.PI / (totalSkills - halfSkills)))
       
-      // 确定该技能在内环还是外环
-      const radius = index < halfSkills ? innerRadius : outerRadius
+      // 确定该技能在内环还是外环，使用响应式半径
+      const radius = index < halfSkills ? responsiveInnerRadius : responsiveOuterRadius
       
       // 计算位置
       const x = Math.cos(angle) * radius
@@ -68,7 +111,7 @@ export function SkillsOrbit({
     })
     
     setSkillsWithPositions(skillsWithPos)
-  }, [skills, innerRadius, outerRadius])
+  }, [skills, responsiveInnerRadius, responsiveOuterRadius])
   
   // 优化的动画旋转，降低更新频率并使用更平滑的插值
   useEffect(() => {
@@ -186,20 +229,48 @@ export function SkillsOrbit({
       }
     })
   }
+
+  // 计算小屏幕下的轨道大小
+  const getResponsiveTrackSize = (baseSize: number) => {
+    if (windowWidth < 480) return baseSize * 0.65;
+    if (windowWidth < 768) return baseSize * 0.8;
+    if (windowWidth < 1024) return baseSize * 0.9;
+    return baseSize;
+  };
+  
+  // 计算小屏幕下的图标和文字大小
+  const getNodeSize = () => {
+    if (windowWidth < 480) return 'w-8 h-8';
+    if (windowWidth < 768) return 'w-10 h-10';
+    return 'w-12 h-12';
+  };
   
   return (
     <div 
       ref={containerRef}
-      className={cn("relative w-full h-[500px] flex items-center justify-center", className)}
+      className={cn("relative w-full h-[500px] md:h-[500px] sm:h-[400px] xs:h-[350px] flex items-center justify-center", className)}
       // 移除容器的鼠标事件
     >
-      {/* 主要轨道 - 增加透明渐变效果 */}
-      <div className="absolute w-[240px] h-[240px] rounded-full border-2 border-indigo-300/30 dark:border-purple-500/30 bg-indigo-50/10 dark:bg-purple-900/10" />
-      <div className="absolute w-[440px] h-[440px] rounded-full border-2 border-indigo-300/30 dark:border-purple-500/30 bg-indigo-50/5 dark:bg-purple-900/5" />
+      {/* 主要轨道 - 增加透明渐变效果，响应式大小 */}
+      <div className="absolute rounded-full border-2 border-indigo-300/30 dark:border-purple-500/30 bg-indigo-50/10 dark:bg-purple-900/10" 
+        style={{
+          width: `${getResponsiveTrackSize(240)}px`,
+          height: `${getResponsiveTrackSize(240)}px`
+        }}
+      />
+      <div className="absolute rounded-full border-2 border-indigo-300/30 dark:border-purple-500/30 bg-indigo-50/5 dark:bg-purple-900/5" 
+        style={{
+          width: `${getResponsiveTrackSize(440)}px`,
+          height: `${getResponsiveTrackSize(440)}px`
+        }}
+      />
       
-      {/* 中心节点 */}
+      {/* 中心节点 - 响应式大小 */}
       <div 
-        className="absolute z-20 flex items-center justify-center bg-white dark:bg-purple-900/80 shadow-lg rounded-full p-3 w-20 h-20 transition-all duration-300 hover:scale-110" 
+        className={cn(
+          "absolute z-20 flex items-center justify-center bg-white dark:bg-purple-900/80 shadow-lg rounded-full transition-all duration-300 hover:scale-110",
+          windowWidth < 480 ? "w-14 h-14 p-2" : windowWidth < 768 ? "w-16 h-16 p-2" : "w-20 h-20 p-3"
+        )}
         style={{
           boxShadow: "0 0 20px rgba(139, 92, 246, 0.3)",
         }}
@@ -208,14 +279,24 @@ export function SkillsOrbit({
           <Image
             src={centerNode.icon}
             alt={centerNode.name}
-            width={48}
-            height={48}
+            width={windowWidth < 480 ? 32 : windowWidth < 768 ? 40 : 48}
+            height={windowWidth < 480 ? 32 : windowWidth < 768 ? 40 : 48}
             className="object-contain"
           />
         ) : centerNode.icon ? (
-          <div className="text-indigo-500 dark:text-purple-300 text-3xl">{centerNode.icon}</div>
+          <div className={cn(
+            "text-indigo-500 dark:text-purple-300",
+            windowWidth < 480 ? "text-xl" : windowWidth < 768 ? "text-2xl" : "text-3xl"
+          )}>
+            {centerNode.icon}
+          </div>
         ) : (
-          <div className="text-indigo-600 dark:text-purple-300 font-bold text-lg text-center">{centerNode.name}</div>
+          <div className={cn(
+            "text-indigo-600 dark:text-purple-300 font-bold text-center",
+            windowWidth < 480 ? "text-sm" : windowWidth < 768 ? "text-base" : "text-lg"
+          )}>
+            {centerNode.name}
+          </div>
         )}
       </div>
       
@@ -252,38 +333,41 @@ export function SkillsOrbit({
             onMouseEnter={() => handleSkillMouseEnter(skill.name)}
             onMouseLeave={handleSkillMouseLeave}
           >
-            {/* 图标带白色背景 */}
+            {/* 图标带白色背景 - 响应式大小 */}
             <div className={cn(
-              "flex items-center justify-center bg-white dark:bg-gray-800 rounded-full shadow-md w-12 h-12 cursor-pointer",
+              "flex items-center justify-center bg-white rounded-full shadow-md cursor-pointer",
               isHovered ? "scale-110 ring-2 ring-indigo-500 dark:ring-purple-400" : "scale-100 hover:ring-1 hover:ring-indigo-300 dark:hover:ring-purple-500/50",
-              "transition-all duration-200"
+              "transition-all duration-200",
+              windowWidth < 480 ? "w-8 h-8" : windowWidth < 768 ? "w-10 h-10" : "w-12 h-12"
             )}>
               {typeof skill.icon === 'string' ? (
                 <Image 
                   src={skill.icon} 
                   alt={skill.name} 
-                  width={24}
-                  height={24}
+                  width={windowWidth < 480 ? 16 : windowWidth < 768 ? 20 : 24}
+                  height={windowWidth < 480 ? 16 : windowWidth < 768 ? 20 : 24}
                   className="object-contain"
                 />
               ) : skill.icon ? (
                 <div className={cn(
-                  "text-xl",
+                  windowWidth < 480 ? "text-base" : windowWidth < 768 ? "text-lg" : "text-xl",
                   isHovered ? "text-indigo-600 dark:text-purple-400" : "text-indigo-500 dark:text-purple-300"
                 )}>
                   {skill.icon}
                 </div>
               ) : (
-                <Badge className="bg-indigo-100/70 dark:bg-purple-600/40 text-indigo-700 dark:text-purple-100 border-none">
+                <Badge className="bg-indigo-100/70 dark:bg-purple-600/40 text-indigo-700 dark:text-purple-100 border-none text-xs">
                   {skill.name}
                 </Badge>
               )}
             </div>
             
-            {/* 技能名称显示在下方，带有渐变效果 */}
+            {/* 技能名称显示在下方，带有渐变效果 - 响应式文字大小 */}
             <div className={cn(
               "mt-1 px-2 py-0.5 rounded-full text-center font-medium transition-all duration-200",
-              isHovered ? "text-sm bg-indigo-100/80 dark:bg-purple-900/50 text-indigo-700 dark:text-white" : "text-xs text-gray-800 dark:text-gray-200"
+              isHovered 
+                ? `${windowWidth < 480 ? "text-xs" : "text-sm"} bg-indigo-100/80 dark:bg-purple-900/50 text-indigo-700 dark:text-white` 
+                : `${windowWidth < 480 ? "text-[10px]" : "text-xs"} text-gray-800 dark:text-gray-200`
             )}>
               {skill.name}
             </div>
