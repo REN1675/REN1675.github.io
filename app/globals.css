@@ -442,3 +442,181 @@ html.scrollbar-measured {
   overflow: visible;
   border-radius: inherit;
 }
+
+/* 添加植物生长相关的动画 */
+@keyframes growPlant {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes bloomFlower {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes swayPlant {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* 为植物元素添加动画类 */
+.growing-plant {
+  animation: growPlant 1.5s ease-out;
+  transform-origin: bottom center;
+}
+
+.blooming-flower {
+  animation: bloomFlower 1s ease-out forwards;
+}
+
+.swaying-plant {
+  animation: swayPlant 5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.plant-element-enter {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.plant-element-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.plant-element-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.plant-element-exit-active {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+/* 蝴蝶飞舞和植物相关的额外动画 */
+@keyframes butterflyFlutter {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) translateX(5px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-3px) translateX(-5px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+}
+
+.butterfly {
+  animation: butterflyFlutter 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* 更自然的生长动画 */
+@keyframes naturalGrowth {
+  0% {
+    transform: scaleY(0);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* 叶子摇摆动画，比干茎更柔和 */
+@keyframes leafSway {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.swaying-leaf {
+  animation: leafSway 6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* 花朵微微摇曳 */
+@keyframes flowerSway {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(2deg);
+  }
+  66% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.swaying-flower {
+  animation: flowerSway 7s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* 土壤微动效果 */
+@keyframes soilBreath {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.03);
+  }
+}
+
+.breathing-soil {
+  animation: soilBreath 8s ease-in-out infinite;
+  transform-origin: top center;
+}
