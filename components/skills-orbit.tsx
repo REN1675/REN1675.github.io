@@ -251,7 +251,7 @@ export function SkillsOrbit({
   return (
     <div 
       ref={containerRef}
-      className={cn("relative w-full h-[500px] md:h-[500px] sm:h-[360px] xs:h-[320px] flex items-center justify-center", className)}
+      className={cn("relative w-full h-[460px] md:h-[460px] sm:h-[320px] xs:h-[280px] flex items-center justify-center", className)}
       // 移除容器的鼠标事件
     >
       {/* 主要轨道 - 增加透明渐变效果，响应式大小 */}
