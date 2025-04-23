@@ -18,6 +18,7 @@ import { SkillsOrbit } from "../components/skills-orbit"
 import { GooeyTextEffect } from "../components/gooey-text-effect"
 import { Code as CodeIcon, Database, LineChart, Users, MessagesSquare, HelpingHand, Puzzle, ListTodo } from "lucide-react"
 import React from "react"
+import { DynamicDots } from "../components/dynamic-dots"
 
 // 技能数据
 const skills = [
@@ -342,9 +343,12 @@ export default function Home() {
               </div>
               <div className="flex-1 flex justify-center md:justify-end animate-float mt-6 md:mt-0">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-purple-500 dark:to-blue-500 rounded-full blur-lg opacity-50"></div>
-                  <div className="image-container w-60 h-60 md:w-80 md:h-80 relative border-4 border-indigo-400/50 dark:border-purple-400/50 transition-transform duration-500 hover:scale-105 animate-pulse-slow">
-                    <Image src="/images/ren-character.svg" alt="任字图像" fill className="object-cover p-4" />
+                  <div className="absolute inset-0 bg-indigo-500/10 dark:bg-indigo-500/10 rounded-full blur-sm opacity-50"></div>
+                  <div className="image-container image-container-dots w-60 h-60 md:w-80 md:h-80 relative border-4 border-indigo-400/50 dark:border-purple-400/50 transition-transform duration-500 hover:scale-105 animate-pulse-slow bg-indigo-100/30 dark:bg-indigo-900/30">
+                    <div className="dots-container">
+                      <DynamicDots />
+                    </div>
+                    <Image src="/images/网站.svg" alt="网站图像" fill className="object-cover p-4" />
                   </div>
                 </div>
               </div>

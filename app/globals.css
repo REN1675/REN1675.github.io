@@ -404,3 +404,41 @@ html.scrollbar-measured {
     transform: translateX(-50%);
   }
 }
+
+/* 动态点效果 */
+.image-container-dots {
+  position: relative;
+  z-index: 1;
+}
+
+.image-container-dots svg {
+  overflow: visible !important;
+}
+
+.image-container-dots svg circle {
+  fill: #67e8f9;
+  transition: r 0.3s ease-out, fill 0.3s ease-out;
+  opacity: 0.7;
+}
+
+.image-container-dots svg circle:hover {
+  fill: #22d3ee;
+  opacity: 1;
+}
+
+.dark .image-container-dots svg circle {
+  fill: #06b6d4;
+}
+
+.dark .image-container-dots svg circle:hover {
+  fill: #0891b2;
+}
+
+/* 点效果的容器样式 */
+.dots-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  border-radius: inherit;
+}
