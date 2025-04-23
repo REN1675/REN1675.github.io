@@ -15,6 +15,7 @@ import { cn } from "../lib/utils"
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "../components/ui/collapsible"
 import { Dialog, DialogContent, DialogClose, DialogTitle, DialogTrigger, DialogDescription, DialogFooter, DialogHeader } from "../components/ui/dialog"
 import { SkillsOrbit } from "../components/skills-orbit"
+import { GooeyTextEffect } from "../components/gooey-text-effect"
 import { Code as CodeIcon, Database, LineChart, Users, MessagesSquare, HelpingHand, Puzzle, ListTodo } from "lucide-react"
 import React from "react"
 
@@ -1225,9 +1226,13 @@ export default function Home() {
             <section id="skills" className="pt-12 pb-6 sm:pt-16 animate-slide-in relative">
               <div className="absolute inset-0 full-width-bg bg-transparent"></div>
               <div className="container max-w-[1440px] mx-auto px-4 relative z-10">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Code className="h-6 w-6 text-indigo-500 dark:text-purple-400" />
-                  <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">技能专长</h2>
+                <div className="flex flex-col items-center justify-center gap-2 mb-8">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Code className="h-6 w-6 text-indigo-500 dark:text-purple-400" />
+                    <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">技能专长</h2>
+                  </div>
+                  
+                  {/* 移除这里的粘性文本动画效果 */}
                 </div>
 
                 {/* 环绕技能展示 */}
@@ -1294,7 +1299,20 @@ export default function Home() {
                           <div className="mb-4 p-4 rounded-full bg-indigo-100/50 dark:bg-purple-900/30">
                             <Code className="h-8 w-8 text-indigo-500/70 dark:text-purple-400/70" />
                           </div>
-                          <h3 className="text-xl font-medium text-gray-400 dark:text-gray-500 mb-2">查看技能详情</h3>
+                          
+                          {/* 替换原来的文本为动画效果 */}
+                          <div className="mb-2">
+                            <GooeyTextEffect 
+                              text="查看技能详情" 
+                              width={180} 
+                              height={60} 
+                              textColor={theme === 'dark' ? "#a78bfa" : "#4f46e5"} 
+                              backgroundColor="transparent"
+                              cursorColor={theme === 'dark' ? "#c4b5fd" : "#818cf8"}
+                              showCursor={false} 
+                            />
+                          </div>
+                          
                           <p className="text-base text-gray-400 dark:text-gray-500">
                             将鼠标悬停在左侧技能图标上<br/>查看详细信息
                           </p>
