@@ -1226,6 +1226,7 @@ export default function Home() {
               <div className="absolute inset-0 full-width-bg bg-transparent"></div>
               <div className="container max-w-[1440px] mx-auto px-4 relative z-10">
                 <div className="flex items-center justify-center gap-2 mb-4">
+                  <Code className="h-6 w-6 text-indigo-500 dark:text-purple-400" />
                   <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">技能专长</h2>
                 </div>
 
