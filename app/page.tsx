@@ -1247,12 +1247,13 @@ export default function Home() {
                     
                     {/* 动态技能详情卡片 - 放在右侧，在小屏幕上改为底部 */}
                     <div className="md:w-1/2 w-full flex items-center justify-center mt-4 md:mt-0">
-                      <div className="relative w-full max-w-md min-h-[200px] flex items-center justify-center">
+                      <div className="relative w-full max-w-md min-h-[200px] md:min-h-[200px] h-[250px] flex items-center justify-center overflow-hidden"
+                      >
                         {orbitSkills.map((skill) => (
                           <div 
                             key={`detail-${skill.name}`} 
                             id={`skill-detail-${skill.name.replace(/\s+/g, '-').toLowerCase()}`}
-                            className="absolute inset-0 opacity-0 pointer-events-none transition-all duration-300 ease-in-out transform translate-x-4 scale-95 bg-white/80 dark:bg-purple-900/60 backdrop-blur-sm rounded-xl p-4 border border-indigo-100 dark:border-purple-500/30 shadow-lg"
+                            className="absolute inset-0 opacity-0 pointer-events-none transition-all duration-300 ease-in-out transform translate-x-4 scale-95 bg-white/80 dark:bg-purple-900/60 backdrop-blur-sm rounded-xl p-4 border border-indigo-100 dark:border-purple-500/30 shadow-lg z-10"
                           >
                             <div className="flex items-center gap-3 mb-2">
                               <div className="h-8 w-8 rounded-full bg-indigo-100 dark:bg-purple-900/80 flex items-center justify-center">

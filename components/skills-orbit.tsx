@@ -169,30 +169,33 @@ export function SkillsOrbit({
       animationRef.current = null
     }
     
-    // 显示对应的技能详情卡片
-    const detailCard = document.getElementById(`skill-detail-${skillName.replace(/\s+/g, '-').toLowerCase()}`)
-    const defaultCard = document.getElementById('skill-detail-default')
-    
-    if (detailCard) {
-      // 隐藏默认卡片
-      if (defaultCard) {
-        defaultCard.style.display = 'none'
-      }
+    // 使用setTimeout延迟显示详情卡片，避免移动端上的瞬移问题
+    setTimeout(() => {
+      // 显示对应的技能详情卡片
+      const detailCard = document.getElementById(`skill-detail-${skillName.replace(/\s+/g, '-').toLowerCase()}`)
+      const defaultCard = document.getElementById('skill-detail-default')
       
-      // 重置所有卡片
-      document.querySelectorAll('[id^="skill-detail-"]').forEach(card => {
-        if (card.id !== 'skill-detail-default') {
-          (card as HTMLElement).style.opacity = '0'
-          ;(card as HTMLElement).style.transform = 'translate(10px, 0) scale(0.95)'
-          ;(card as HTMLElement).style.pointerEvents = 'none'
+      if (detailCard) {
+        // 隐藏默认卡片
+        if (defaultCard) {
+          defaultCard.style.display = 'none'
         }
-      })
-      
-      // 显示当前卡片
-      detailCard.style.opacity = '1'
-      detailCard.style.transform = 'translate(0, 0) scale(1)'
-      detailCard.style.pointerEvents = 'auto'
-    }
+        
+        // 重置所有卡片
+        document.querySelectorAll('[id^="skill-detail-"]').forEach(card => {
+          if (card.id !== 'skill-detail-default') {
+            (card as HTMLElement).style.opacity = '0'
+            ;(card as HTMLElement).style.transform = 'translate(10px, 0) scale(0.95)'
+            ;(card as HTMLElement).style.pointerEvents = 'none'
+          }
+        })
+        
+        // 显示当前卡片
+        detailCard.style.opacity = '1'
+        detailCard.style.transform = 'translate(0, 0) scale(1)'
+        detailCard.style.pointerEvents = 'auto'
+      }
+    }, 50); // 短暂延迟，让布局稳定
   }
   
   const handleSkillMouseLeave = () => {
