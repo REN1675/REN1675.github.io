@@ -264,6 +264,14 @@ html.scrollbar-measured {
   display: inline-block;
   width: max-content;
   vertical-align: baseline;
+  background-image: linear-gradient(to right, #4f46e5, #9333ea) !important;
+  color: transparent !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+
+.dark .gradient-text {
+  background-image: linear-gradient(to right, #d8b4fe, #93c5fd) !important;
 }
 
 .gradient-text::before {
@@ -281,15 +289,6 @@ html.scrollbar-measured {
   );
   transform: skewX(-25deg);
   animation: shine 4s ease-in-out infinite;
-}
-
-.dark .gradient-text::before {
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
 }
 
 /* 自适应高度的首页部分 */
@@ -619,4 +618,178 @@ html.scrollbar-measured {
 .breathing-soil {
   animation: soilBreath 8s ease-in-out infinite;
   transform-origin: top center;
+}
+
+/* 加载动画样式 */
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  position: relative;
+  z-index: 2;
+}
+
+svg.logo {
+  width: 62px;
+  height: auto;
+  overflow: visible;
+}
+
+svg.logo path {
+  animation: snake 2.4s linear infinite;
+  stroke-dasharray: 81px 100px;
+  stroke-dashoffset: -99px;
+}
+
+svg.logo rect {
+  fill: #7A30CF;
+}
+
+svg.logo rect:nth-child(1) {
+  animation: drop-in 2.4s cubic-bezier(0.32, 0, 0.67, 0) infinite;
+  transform-origin: -9px 24px;
+}
+
+svg.logo rect:nth-child(2) {
+  animation: drop-out 2.4s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+  transform-origin: 66px -9px;
+}
+
+svg.logo rect:nth-child(3) {
+  animation: drop-out-2 2.4s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+  transform-origin: 66px -9px;
+}
+
+.noise {
+  position: fixed;
+  top: -100px;
+  right: -100px;
+  bottom: -100px;
+  left: -100px;
+  animation: noise 0.6s steps(1) infinite;
+  background-image: url('https://assets.codepen.io/5817405/noise-2.png');
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 1;
+}
+
+@keyframes snake {
+  0%, 19% {
+    stroke-dashoffset: -81px;
+  }
+  50%, 100% {
+    stroke-dashoffset: 81px;
+  }
+}
+
+@keyframes drop-in {
+  0% {
+    transform: translate3d(-20px, 20px, 0) scale(0.1);
+  }
+  20% {
+    transform: translate3d(10px, -10px, 0) scale(1);
+  }
+  20.01%, 100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes drop-out {
+  0%, 49.99% { 
+    transform: translate3d(20px, -20px, 0) scale(0);
+  }
+  50% {
+    transform: translate3d(-10px, 10px, 0) scale(1);
+  }
+  80%, 100% { 
+    transform: translate3d(15px, -15px, 0) scale(0);
+  }
+}
+
+@keyframes drop-out-2 {
+  0%, 49.99% { 
+    transform: translate3d(20px, -20px, 0) scale(0);
+  }
+  50% {
+    transform: translate3d(-10px, 10px, 0) scale(1);
+  }
+  100% { 
+    transform: translate3d(10px, -20px, 0) scale(0);
+  }
+}
+
+@keyframes noise {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  10% {
+    transform: translate3d(-100px, -100px, 0);
+  }
+  20% {
+    transform: translate3d(100px, -90px, 0);
+  }
+  30% {
+    transform: translate3d(-90px, 80px, 0);
+  }
+  40% {
+    transform: translate3d(80px, -70px, 0);
+  }
+  50% {
+    transform: translate3d(-70px, 60px, 0);
+  }
+  60% {
+    transform: translate3d(60px, -50px, 0);
+  }
+  70% {
+    transform: translate3d(-50px, 40px, 0);
+  }
+  80% {
+    transform: translate3d(40px, -30px, 0);
+  }
+  90% {
+    transform: translate3d(-30px, 20px, 0);
+  }
+  100% {
+    transform: translate3d(20px, -10px, 0);
+  }
+}
+
+/* 确保页脚显示正确 */
+footer {
+  position: relative;
+  z-index: 1 !important; /* 进一步降低z-index，避免覆盖花朵 */
+  width: 100%;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 1rem;
+  padding: 0.5rem 0 !important; /* 降低页脚高度 */
+}
+
+footer .container {
+  padding: 0.5rem !important; /* 减少容器内边距 */
+}
+
+/* 调整页脚内容大小 */
+footer .text-sm {
+  font-size: 0.8rem !important; /* 减小字体大小 */
+}
+
+footer svg {
+  height: 1.2rem !important;
+  width: 1.2rem !important; /* 减小图标大小 */
+}
+
+footer .space-x-4 > * {
+  margin-left: 0.5rem !important; /* 减小图标间距 */
+}
+
+footer .flex-col {
+  margin: 0 !important;
+  padding: 0 !important;
 }
