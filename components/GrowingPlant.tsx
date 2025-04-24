@@ -83,7 +83,7 @@ const GrowingPlant: React.FC = () => {
   const flowerScale = scrollProgress > 0.7 ? Math.min(1, (scrollProgress - 0.7) * 5) : 0;
 
   return (
-    <div className="fixed right-5 bottom-0 z-50 hidden md:block pointer-events-none">
+    <div className="fixed right-5 bottom-0 z-10 hidden md:block pointer-events-none">
       <div className="relative w-40 h-[60vh]">
         <svg 
           ref={svgRef}

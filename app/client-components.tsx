@@ -1,20 +1,6 @@
 "use client"
 
 import { useEffect } from "react"
-import dynamic from 'next/dynamic'
-
-// 禁用SSR导入LoadingScreen组件 - 确保立即加载优先显示
-export const ClientLoadingScreen = dynamic(
-  () => import('@/components/LoadingScreen'),
-  { 
-    ssr: false, 
-    loading: () => (
-      <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center" style={{ backgroundColor: '#D4AFFF' }}>
-        {/* 移除加载文字，保持空白 */}
-      </div>
-    )
-  }
-)
 
 export function ScrollbarMeasurer() {
   useEffect(() => {

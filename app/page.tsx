@@ -1435,8 +1435,8 @@ export default function Home() {
                 <div className="space-y-6">
                   {/* 邮箱 */}
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-indigo-100 dark:bg-purple-800/60 flex items-center justify-center flex-shrink-0" style={{backgroundColor: '#eef2ff'}}>
-                      <Mail className="h-6 w-6 text-indigo-600 dark:text-purple-300" style={{color: '#4f46e5'}} />
+                    <div className="w-12 h-12 rounded-lg bg-indigo-100 dark:bg-purple-800/60 flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-6 w-6 text-indigo-600 dark:text-purple-300" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">电子邮箱</h3>
@@ -1514,7 +1514,7 @@ export default function Home() {
               {/* 右侧快捷操作 */}
               <div className="hidden sm:block bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
                 <div className="text-center mb-8">
-                  <div className="w-24 h-24 rounded-full bg-indigo-100 dark:bg-purple-800/60 mx-auto mb-6 flex items-center justify-center shadow-lg" style={{backgroundColor: '#7A30CF', background: '#7A30CF'}}>
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-purple-500 dark:to-indigo-400 mx-auto mb-6 flex items-center justify-center shadow-lg">
                     <Mail className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">快速联系</h3>
@@ -1527,7 +1527,6 @@ export default function Home() {
                   <Button 
                     className="w-full transform hover:scale-105 active:scale-95 transition-all duration-200 bg-indigo-600 hover:bg-indigo-700 dark:bg-purple-600 dark:hover:bg-purple-700 text-white text-xl py-6"
                     onClick={() => window.location.href = 'mailto:1159680834@qq.com'}
-                    style={{backgroundColor: '#4f46e5'}}
                   >
                     <Mail className="mr-2 h-6 w-6" />
                     发送邮件
@@ -1537,10 +1536,9 @@ export default function Home() {
                     variant="outline" 
                     className="w-full transform hover:scale-105 active:scale-95 transition-all duration-200 text-indigo-700 dark:text-white bg-indigo-50/50 dark:bg-purple-900/30 border-indigo-200 dark:border-purple-500/30 text-xl py-6"
                     onClick={() => window.location.href = 'tel:15035421059'}
-                    style={{color: '#7A30CF', borderColor: '#7A30CF'}}
                   >
-                    <Phone className="mr-2 h-6 w-6" style={{color: '#7A30CF'}} />
-                    <span style={{color: '#7A30CF'}}>拨打电话</span>
+                    <Phone className="mr-2 h-6 w-6" />
+                    拨打电话
                   </Button>
                 </div>
 
@@ -1556,10 +1554,10 @@ export default function Home() {
       </main>
 
       {/* 页脚部分 */}
-      <footer className="py-5 border-t border-indigo-200 dark:border-purple-500/20 bg-white dark:bg-gray-900 relative z-0">
+      <footer className="py-5 border-t border-indigo-200 dark:border-purple-500/20 bg-white dark:bg-gray-900">
         <div className="container max-w-[1440px] mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">© {new Date().getFullYear()} 任瑜瑜. 保留所有权利.</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">© {new Date().getFullYear()} 任瑜瑜. 保留所有权利.</div>
             
             <div className="flex items-center space-x-4">
               <a 
@@ -1568,9 +1566,8 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-purple-400 transition-colors"
                 aria-label="GitHub"
-                style={{display: 'block', visibility: 'visible'}}
               >
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" style={{display: 'block', visibility: 'visible'}}>
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                   <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0112 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48 3.97-1.32 6.833-5.054 6.833-9.458C22 6.463 17.522 2 12 2z" />
                 </svg>
               </a>
@@ -1578,20 +1575,18 @@ export default function Home() {
                 href="mailto:1159680834@qq.com" 
                 className="text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-purple-400 transition-colors"
                 aria-label="邮箱"
-                style={{display: 'block', visibility: 'visible'}}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{display: 'block', visibility: 'visible'}}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </a>
               <a 
                 href="tel:15035421059" 
                 className="text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-purple-400 transition-colors"
                 aria-label="电话"
-                style={{display: 'block', visibility: 'visible'}}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{display: 'block', visibility: 'visible'}}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </a>
             </div>

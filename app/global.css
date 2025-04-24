@@ -1,17 +1,17 @@
 /* 添加到文件末尾 */
 
-/* 强制页面背景颜色 - 但不影响加载屏幕 */
-html.page-loaded, html.page-loaded body {
+/* 强制页面背景颜色 */
+html, body {
   background-color: white !important;
 }
 
 @media (prefers-color-scheme: dark) {
-  html.page-loaded, html.page-loaded body {
+  html, body {
     background-color: #111827 !important; /* gray-900 */
   }
 }
 
-html.dark.page-loaded, html.dark.page-loaded body {
+html.dark, html.dark body {
   background-color: #111827 !important; /* gray-900 */
 }
 
@@ -21,25 +21,13 @@ html.dark.page-loaded, html.dark.page-loaded body {
   background-color: inherit !important;
 }
 
-/* 强制所有子元素不显示紫色背景 - 但排除加载屏幕和渐变文字 */
-html.page-loaded body *:not(.gradient-text):not(.gradient-text *) {
+/* 强制所有子元素不显示紫色背景 */
+body * {
   background-image: none !important;
 }
 
-/* 确保图标正确显示颜色 */
-.text-indigo-600, .text-purple-300, [class*="text-indigo-"], [class*="text-purple-"] {
-  color: inherit !important;
-}
-.text-indigo-600 {
-  color: #4f46e5 !important;
-}
-.dark .text-purple-300 {
-  color: #d8b4fe !important;
-}
-
-/* 特别移除页面底部的任何紫色背景 - 但不影响加载屏幕 */
-/* 移除这个遮挡页脚的覆盖层
-html.page-loaded body::after {
+/* 特别移除页面底部的任何紫色背景 */
+body::after {
   content: "";
   display: block;
   position: fixed;
@@ -51,19 +39,6 @@ html.page-loaded body::after {
   z-index: 1;
 }
 
-html.dark.page-loaded body::after {
+html.dark body::after {
   background-color: #111827 !important;
-} 
-*/
-
-/* 确保页脚显示正确 */
-footer {
-  position: relative;
-  z-index: 5 !important; /* 降低z-index，避免覆盖花朵 */
-  width: 100%;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  margin-top: 2rem;
-  padding-bottom: 1rem;
 } 
