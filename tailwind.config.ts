@@ -92,13 +92,34 @@ const config: Config = {
   				'0%': { left: '-75%' },
   				'60%': { left: '125%' },
   				'100%': { left: '125%' }
-  			}
+  			},
+            'float': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            'float-slow': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            'ping-slow': {
+              '0%': { transform: 'scale(1)', opacity: '0.2' },
+              '50%': { transform: 'scale(1.2)', opacity: '0.3' },
+              '100%': { transform: 'scale(1)', opacity: '0.2' }
+            },
+            'pulse-slow': {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.8' }
+            }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			'blink-caret': 'blink-caret 1.2s step-end infinite',
-  			'shine': 'shine 4s ease-in-out infinite'
+  			'shine': 'shine 4s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'float-slow': 'float-slow 6s ease-in-out infinite',
+            'ping-slow': 'ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+            'pulse-slow': 'pulse-slow 3s ease-in-out infinite'
   		},
   		container: {
   			center: true,
