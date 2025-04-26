@@ -1,7 +1,7 @@
 import "./globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ScrollbarMeasurer, ThemeHandler } from "./client-components"
+import { ScrollbarMeasurer } from "./client-components"
 import GrowingPlant from "@/components/GrowingPlant"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -43,7 +43,6 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <ThemeHandler />
           <ScrollbarMeasurer />
           {children}
           <GrowingPlant />

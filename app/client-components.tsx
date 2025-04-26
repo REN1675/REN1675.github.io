@@ -1,13 +1,22 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
 // 主题处理组件，确保主题设置不受系统影响
 export function ThemeHandler() {
+  const [mounted, setMounted] = useState(false)
   const { resolvedTheme, setTheme } = useTheme()
   
+  // 确保仅在客户端执行主题处理
   useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  useEffect(() => {
+    // 只有在客户端渲染后才执行
+    if (!mounted) return
+    
     // 禁用系统主题偏好
     const disableSystemPreference = () => {
       // 如果检测到系统主题被使用，则强制使用light
@@ -43,13 +52,24 @@ export function ThemeHandler() {
     
     // 清理
     return () => observer.disconnect()
-  }, [resolvedTheme, setTheme])
+  }, [mounted, resolvedTheme, setTheme])
   
+  // 不渲染任何内容
   return null
 }
 
 export function ScrollbarMeasurer() {
+  const [mounted, setMounted] = useState(false)
+  
+  // 确保在客户端执行
   useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  useEffect(() => {
+    // 只有在客户端渲染后才执行
+    if (!mounted) return
+    
     // 测量滚动条宽度
     const calculateScrollbarWidth = (): number => {
       // 创建一个内容溢出的div
@@ -116,7 +136,7 @@ export function ScrollbarMeasurer() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('DOMContentLoaded', () => {});
     };
-  }, []);
+  }, [mounted]);
   
   // 此组件不渲染任何内容
   return null;
