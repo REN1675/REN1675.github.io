@@ -5,12 +5,7 @@ html, body {
   background-color: white !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  html, body {
-    background-color: #111827 !important; /* gray-900 */
-  }
-}
-
+/* 移除系统偏好深色模式的媒体查询，统一使用class控制 */
 html.dark, html.dark body {
   background-color: #111827 !important; /* gray-900 */
 }
