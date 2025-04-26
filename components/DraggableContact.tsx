@@ -578,7 +578,7 @@ const DraggableContact: React.FC = () => {
           </h2>
           
           {/* 邮件图标 */}
-          <div className="absolute left-[60%] -top-2 transform rotate-12 animate-float-slow">
+          <div className="absolute left-[30%] -top-2 transform rotate-12 animate-float-slow">
             {contactMethods[0].icon && (
               <a 
                 href={contactMethods[0].href}
