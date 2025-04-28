@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 根据网站主题调整color-scheme，确保系统主题与网站主题协调一致 */
+/* 简化主题系统，参考zhanzhan-21的实现 */
 :root {
   color-scheme: light;
 }

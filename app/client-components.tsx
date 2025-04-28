@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
-// 增强的主题处理组件，使系统主题和网站主题保持一致
+// 简化的主题处理组件，参考zhanzhan-21项目
 export function ThemeHandler() {
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme, theme, setTheme } = useTheme()
@@ -17,9 +17,11 @@ export function ThemeHandler() {
     // 只有在客户端渲染后才执行
     if (!mounted) return
     
-    // 设置meta标签，确保正确响应系统主题
-    const addMetaTags = () => {
-      // 添加颜色方案meta标签
+    // 添加必要的meta标签
+    const updateMetaTags = () => {
+      const isDarkMode = document.documentElement.classList.contains('dark')
+      
+      // 更新color-scheme meta标签
       let metaColorScheme = document.querySelector('meta[name="color-scheme"]')
       if (!metaColorScheme) {
         metaColorScheme = document.createElement('meta')
@@ -27,43 +29,40 @@ export function ThemeHandler() {
         document.head.appendChild(metaColorScheme)
       }
       
-      // 根据当前网站主题设置color-scheme
-      if (theme === 'dark' || resolvedTheme === 'dark') {
-        metaColorScheme.setAttribute('content', 'dark')
-      } else {
-        metaColorScheme.setAttribute('content', 'light')
+      // 根据当前主题设置color-scheme
+      metaColorScheme.setAttribute('content', isDarkMode ? 'dark' : 'light')
+      
+      // 更新theme-color标签
+      const themeColorLight = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: light)"]')
+      const themeColorDark = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]')
+      
+      if (themeColorLight) {
+        themeColorLight.setAttribute('media', isDarkMode ? 'not all' : '(prefers-color-scheme: light)')
       }
+      
+      if (themeColorDark) {
+        themeColorDark.setAttribute('media', isDarkMode ? 'all' : '(prefers-color-scheme: dark)')
+      }
+      
+      // 设置数据属性到body
+      document.body.dataset.theme = isDarkMode ? 'dark' : 'light'
     }
     
-    // 处理系统主题与网站主题同步
-    const handleThemeSync = () => {
-      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-      
-      // 如果是系统主题，则根据系统设置来设置网站主题
-      if (theme === 'system' || !theme) {
-        setTheme(isDarkMode ? 'dark' : 'light')
+    // 初始同步系统主题
+    const syncWithSystem = () => {
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (theme === 'system') {
+        setTheme(systemPrefersDark ? 'dark' : 'light')
       }
-      
-      // 主动监听系统主题变化
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-      const handleMediaChange = (e: MediaQueryListEvent) => {
-        // 如果用户选择跟随系统主题，则同步变化
-        if (theme === 'system' || !theme) {
-          setTheme(e.matches ? 'dark' : 'light')
-        }
-      }
-      
-      mediaQuery.addEventListener('change', handleMediaChange)
-      return () => mediaQuery.removeEventListener('change', handleMediaChange)
+      updateMetaTags()
     }
     
     // 执行初始化
-    addMetaTags()
-    const cleanup = handleThemeSync()
+    syncWithSystem()
     
-    // 当主题改变时更新meta标签
+    // 监听主题变化
     const observer = new MutationObserver(() => {
-      addMetaTags()
+      updateMetaTags()
     })
     
     observer.observe(document.documentElement, {
@@ -71,10 +70,21 @@ export function ThemeHandler() {
       attributeFilter: ['class']
     })
     
+    // 监听系统主题变化
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      if (theme === 'system') {
+        setTheme(e.matches ? 'dark' : 'light')
+        updateMetaTags()
+      }
+    }
+    
+    mediaQuery.addEventListener('change', handleMediaChange)
+    
     // 清理函数
     return () => {
-      cleanup()
       observer.disconnect()
+      mediaQuery.removeEventListener('change', handleMediaChange)
     }
   }, [mounted, resolvedTheme, theme, setTheme])
   
