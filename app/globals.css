@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 允许主题系统正常工作 */
+:root {
+  color-scheme: light dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* 确保浅色模式显示正常，但不强制背景色 */
+body {
+  @apply bg-background text-foreground;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 移除强制深色模式背景色 */
+/* html.dark body {
+  background-color: #111827;
+  color: #ffffff;
+} */
+
 @layer base {
   :root {
     --background: 0 0% 100%;

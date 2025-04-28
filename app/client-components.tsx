@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
-// 主题处理组件，确保主题设置不受系统影响，但允许手动切换
+// 简化的主题处理组件，只屏蔽系统主题，不干扰手动切换
 export function ThemeHandler() {
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme, theme, setTheme } = useTheme()
@@ -17,20 +17,45 @@ export function ThemeHandler() {
     // 只有在客户端渲染后才执行
     if (!mounted) return
     
-    // 只禁用系统主题偏好，不影响手动切换
-    const disableSystemPreference = () => {
-      // 只有当检测到系统主题被使用时，才强制使用light
-      if (resolvedTheme === 'system') {
+    // 添加meta标签，帮助阻止系统主题影响
+    const addMetaTags = () => {
+      // 添加颜色方案meta标签
+      let metaColorScheme = document.querySelector('meta[name="color-scheme"]')
+      if (!metaColorScheme) {
+        metaColorScheme = document.createElement('meta')
+        metaColorScheme.setAttribute('name', 'color-scheme')
+        document.head.appendChild(metaColorScheme)
+      }
+      // 默认设置为light，允许手动切换改变它
+      metaColorScheme.setAttribute('content', 'light dark')
+    }
+    
+    // 只干预系统主题，不干扰手动切换
+    const handleSystemTheme = () => {
+      if (resolvedTheme === 'system' || !theme) {
         setTheme('light')
       }
     }
     
     // 执行初始化
-    disableSystemPreference()
+    addMetaTags()
+    handleSystemTheme()
+    
+    // 添加媒体查询监听，只在系统主题变化时处理
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleMediaChange = () => {
+      // 当系统主题变化且当前使用的是系统主题时，强制使用light
+      if (theme === 'system' || !theme) {
+        setTheme('light')
+      }
+    }
+    mediaQuery.addEventListener('change', handleMediaChange)
     
     // 清理函数
-    return () => {}
-  }, [mounted, resolvedTheme, setTheme])
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaChange)
+    }
+  }, [mounted, resolvedTheme, theme, setTheme])
   
   // 不渲染任何内容
   return null
