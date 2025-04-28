@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
-// 主题处理组件，确保主题设置不受系统影响
+// 主题处理组件，确保主题设置不受系统影响，但允许手动切换
 export function ThemeHandler() {
   const [mounted, setMounted] = useState(false)
-  const { resolvedTheme, setTheme } = useTheme()
+  const { resolvedTheme, theme, setTheme } = useTheme()
   
   // 确保仅在客户端执行主题处理
   useEffect(() => {
@@ -17,41 +17,19 @@ export function ThemeHandler() {
     // 只有在客户端渲染后才执行
     if (!mounted) return
     
-    // 禁用系统主题偏好
+    // 只禁用系统主题偏好，不影响手动切换
     const disableSystemPreference = () => {
-      // 如果检测到系统主题被使用，则强制使用light
+      // 只有当检测到系统主题被使用时，才强制使用light
       if (resolvedTheme === 'system') {
         setTheme('light')
       }
-      
-      // 手动控制HTML类，确保正确的主题被应用
-      const isDark = resolvedTheme === 'dark'
-      if (isDark) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-      
-      // 设置背景颜色
-      document.body.style.backgroundColor = isDark ? '#111827' : 'white'
     }
     
     // 执行初始化
     disableSystemPreference()
     
-    // 创建一个MutationObserver监听HTML类的变化
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          disableSystemPreference()
-        }
-      })
-    })
-    
-    observer.observe(document.documentElement, { attributes: true })
-    
-    // 清理
-    return () => observer.disconnect()
+    // 清理函数
+    return () => {}
   }, [mounted, resolvedTheme, setTheme])
   
   // 不渲染任何内容
