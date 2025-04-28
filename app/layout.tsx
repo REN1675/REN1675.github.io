@@ -35,6 +35,9 @@ export default function RootLayout({
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827" />
       </head>
       <body 
         className={inter.className}
@@ -43,8 +46,9 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
+          enableSystem={true}
+          disableTransitionOnChange={false}
+          storageKey="personal-site-theme"
         >
           <ScrollbarMeasurer />
           <ThemeHandler />

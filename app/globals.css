@@ -2,26 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 允许主题系统正常工作 */
+/* 根据网站主题调整color-scheme，确保系统主题与网站主题协调一致 */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
 html.dark {
   color-scheme: dark;
 }
 
-/* 确保浅色模式显示正常，但不强制背景色 */
+/* 确保基础颜色正确应用 */
 body {
   @apply bg-background text-foreground;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 移除强制深色模式背景色 */
-/* html.dark body {
-  background-color: #111827;
-  color: #ffffff;
-} */
+/* 强制设置深色/浅色模式下的基础颜色，保证任何模式下都能正确展示 */
+html:not(.dark) body {
+  background-color: white;
+  color: rgb(17, 24, 39);
+}
+
+html.dark body {
+  background-color: rgb(17, 24, 39);
+  color: white;
+}
 
 @layer base {
   :root {
@@ -116,11 +121,6 @@ body {
     scroll-behavior: smooth;
     padding: 0;
     margin: 0;
-    background-color: white;
-  }
-
-  html.dark body {
-    background-color: rgb(17, 24, 39); /* 与灰色900相同的颜色 */
   }
 }
 

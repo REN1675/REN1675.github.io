@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
-// 简化的主题处理组件，只屏蔽系统主题，不干扰手动切换
+// 增强的主题处理组件，使系统主题和网站主题保持一致
 export function ThemeHandler() {
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme, theme, setTheme } = useTheme()
@@ -17,7 +17,7 @@ export function ThemeHandler() {
     // 只有在客户端渲染后才执行
     if (!mounted) return
     
-    // 添加meta标签，帮助阻止系统主题影响
+    // 设置meta标签，确保正确响应系统主题
     const addMetaTags = () => {
       // 添加颜色方案meta标签
       let metaColorScheme = document.querySelector('meta[name="color-scheme"]')
@@ -26,34 +26,55 @@ export function ThemeHandler() {
         metaColorScheme.setAttribute('name', 'color-scheme')
         document.head.appendChild(metaColorScheme)
       }
-      // 默认设置为light，允许手动切换改变它
-      metaColorScheme.setAttribute('content', 'light dark')
+      
+      // 根据当前网站主题设置color-scheme
+      if (theme === 'dark' || resolvedTheme === 'dark') {
+        metaColorScheme.setAttribute('content', 'dark')
+      } else {
+        metaColorScheme.setAttribute('content', 'light')
+      }
     }
     
-    // 只干预系统主题，不干扰手动切换
-    const handleSystemTheme = () => {
-      if (resolvedTheme === 'system' || !theme) {
-        setTheme('light')
+    // 处理系统主题与网站主题同步
+    const handleThemeSync = () => {
+      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+      
+      // 如果是系统主题，则根据系统设置来设置网站主题
+      if (theme === 'system' || !theme) {
+        setTheme(isDarkMode ? 'dark' : 'light')
       }
+      
+      // 主动监听系统主题变化
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      const handleMediaChange = (e: MediaQueryListEvent) => {
+        // 如果用户选择跟随系统主题，则同步变化
+        if (theme === 'system' || !theme) {
+          setTheme(e.matches ? 'dark' : 'light')
+        }
+      }
+      
+      mediaQuery.addEventListener('change', handleMediaChange)
+      return () => mediaQuery.removeEventListener('change', handleMediaChange)
     }
     
     // 执行初始化
     addMetaTags()
-    handleSystemTheme()
+    const cleanup = handleThemeSync()
     
-    // 添加媒体查询监听，只在系统主题变化时处理
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleMediaChange = () => {
-      // 当系统主题变化且当前使用的是系统主题时，强制使用light
-      if (theme === 'system' || !theme) {
-        setTheme('light')
-      }
-    }
-    mediaQuery.addEventListener('change', handleMediaChange)
+    // 当主题改变时更新meta标签
+    const observer = new MutationObserver(() => {
+      addMetaTags()
+    })
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
     
     // 清理函数
     return () => {
-      mediaQuery.removeEventListener('change', handleMediaChange)
+      cleanup()
+      observer.disconnect()
     }
   }, [mounted, resolvedTheme, theme, setTheme])
   
