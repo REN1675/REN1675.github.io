@@ -17,16 +17,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 强制设置深色/浅色模式下的基础颜色，保证任何模式下都能正确展示 */
-html:not(.dark) body {
-  background-color: white;
-  color: rgb(17, 24, 39);
-}
 
-html.dark body {
-  background-color: rgb(17, 24, 39);
-  color: white;
-}
 
 @layer base {
   :root {
@@ -70,36 +61,36 @@ html.dark body {
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 270 70% 60%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 213 31% 91%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 32.6% 70%;
+    --accent: 215 27.9% 16.9%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 270 70% 60%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263 70% 50%;
 
     /* 自定义颜色变量 - 深色模式 */
-    --text-primary: 210 40% 98%;
+    --text-primary: 213 31% 91%;
     --text-secondary: 215 20.2% 65.1%;
-    --bg-card: 217.2 32.6% 17.5%;
-    --bg-card-hover: 270 30% 25%;
-    --nav-bg: 222.2 84% 4.9%;
-    --nav-text: 210 40% 98%;
-    --nav-active: 270 70% 75%;
-    --gradient-start: 270 30% 20%;
-    --gradient-end: 262 83% 15%;
+    --bg-card: 224 71% 7%;
+    --bg-card-hover: 270 30% 15%;
+    --nav-bg: 224 71% 4%;
+    --nav-text: 213 31% 91%;
+    --nav-active: 263 70% 75%;
+    --gradient-start: 270 30% 10%;
+    --gradient-end: 262 60% 5%;
   }
 }
 

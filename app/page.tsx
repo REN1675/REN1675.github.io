@@ -183,7 +183,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* 移除背景组件 */}
+      <FixedBackground />
       
       {/* 导航栏 */}
       <header
@@ -1423,7 +1423,7 @@ export default function Home() {
             {/* 联系方式部分 - 直接与技能专长相同层级 */}
             <section id="contact" className="pt-16 pb-1 w-full relative">
               {/* 添加全宽度背景覆盖 */}
-              <div className="absolute inset-0 w-screen h-[calc(100%+64px)] bg-white dark:bg-slate-950 -z-10 max-w-none left-1/2 transform -translate-x-1/2"></div>
+              <div className="absolute inset-0 w-screen h-[calc(100%+64px)] bg-white dark:bg-gray-900 -z-10 max-w-none left-1/2 transform -translate-x-1/2"></div>
               <div className="container max-w-[1440px] mx-auto px-4 relative z-10">
                 <DraggableContact />
               </div>

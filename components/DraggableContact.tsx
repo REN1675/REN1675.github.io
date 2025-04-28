@@ -656,7 +656,7 @@ const DraggableContact: React.FC = () => {
               href={contact.href}
               target={contact.type === 'github' ? '_blank' : undefined}
               rel={contact.type === 'github' ? 'noopener noreferrer' : undefined}
-              className="flex items-center p-3 md:p-4 rounded-xl bg-white/90 dark:bg-slate-900/90 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-purple-900/30 group contact-card"
+              className="flex items-center p-3 md:p-4 rounded-xl bg-white/90 dark:bg-gray-900/90 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-purple-900/30 group contact-card"
               style={{ color: contact.color }}
             >
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg mr-3 md:mr-4 flex items-center justify-center flex-shrink-0 contact-icon">

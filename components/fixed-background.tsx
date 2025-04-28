@@ -32,7 +32,7 @@ export function FixedBackground() {
           fill 
           priority 
           sizes="100vw"
-          className="object-cover transition-opacity duration-500 opacity-60" 
+          className={`object-cover transition-opacity duration-700 ${isDarkTheme ? 'opacity-50' : 'opacity-60'}`}
         />
         <div className={`absolute inset-0 ${isDarkTheme ? 'bg-black/30' : 'bg-white/40'}`} />
       </div>
