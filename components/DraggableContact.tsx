@@ -87,11 +87,18 @@ const DraggableContact: React.FC = () => {
         // 添加一个小的安全边距 (0.95)
         let scale = (containerWidth / titleWidth) * 0.95; 
         
-        // 限制最小和最大缩放
-        scale = Math.max(0.4, Math.min(scale, 1)); 
+        // 限制最小和最大缩放，在窄屏上允许更小的缩放
+        const isMobile = window.innerWidth < 640;
+        const minScale = isMobile ? 0.3 : 0.4;
+        scale = Math.max(minScale, Math.min(scale, 1)); 
         
         // 应用缩放
         titleElement.style.setProperty('--title-scale', scale.toString());
+        
+        // 在窄屏上添加字距调整，让文字看起来更紧凑
+        
+        titleElement.style.letterSpacing = 'normal';
+        
       }
     };
     
@@ -541,7 +548,7 @@ const DraggableContact: React.FC = () => {
   return (
     <div ref={containerRef} className="relative w-full max-w-5xl mx-auto">
       {/* SVG层用于绘制电话线 - 修改为绝对定位，但不撑开页面布局 */}
-      <div className="absolute top-0 left-0 w-full pointer-events-none z-30" style={{ height: "100%", position: "absolute" }}>
+      <div className="absolute top-0 left-0 w-full pointer-events-none z-30 phone-line-container" style={{ height: "100%", position: "absolute" }}>
         <svg width="100%" height="100%" className="overflow-visible" style={{transform: 'translateZ(0)'}}>
           <defs>
             <filter id="glow">
@@ -564,15 +571,16 @@ const DraggableContact: React.FC = () => {
       </div>
       
       {/* CONTACT ME 大文字 */}
-      <div className="flex justify-center items-center mb-16 relative w-full">
+      <div className="flex justify-center items-center mb-8 sm:mb-12 md:mb-16 relative w-full">
         <div className="relative inline-block">
           <h2 
             ref={contactMeRef}
-            className="text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] font-black text-indigo-600 dark:text-purple-400 whitespace-nowrap"
+            className="text-5xl xs:text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] font-black text-indigo-600 dark:text-purple-400 whitespace-nowrap contact-title"
             style={{ 
               transform: 'scale(var(--title-scale, 0.9))', 
               transformOrigin: 'center center',
-              WebkitTextStroke: '9px currentColor',
+              WebkitTextStroke: '2px currentColor',
+              WebkitTextStrokeWidth: 'calc(3px + 0.3vw)',
               textShadow: '0 0 2px currentColor',
             }}
           >
@@ -580,13 +588,13 @@ const DraggableContact: React.FC = () => {
           </h2>
           
           {/* 邮件图标 */}
-          <div className="absolute left-[60%] -top-2 transform rotate-12 animate-float-slow">
+          <div className="absolute left-[55%] sm:left-[60%] -top-2 transform rotate-12 animate-float-slow scale-75 sm:scale-90 md:scale-100">
             {contactMethods[0].icon && (
               <a 
                 href={contactMethods[0].href}
                 className="cursor-pointer hover:scale-110 transition-transform duration-300 block"
               >
-                <div className="text-5xl md:text-6xl lg:text-7xl" style={{ color: contactMethods[0].color }}>
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl" style={{ color: contactMethods[0].color }}>
                   {contactMethods[0].icon}
                 </div>
               </a>
@@ -596,7 +604,7 @@ const DraggableContact: React.FC = () => {
           {/* 可拖拽电话图标 */}
           <div 
             ref={phoneRef}
-            className={`absolute bottom-[-90px] sm:bottom-[-70px] md:bottom-[-60px] left-[35%] sm:left-[40%] md:left-[45%] transform -translate-x-1/2 z-30 cursor-grab ${isDragging ? 'cursor-grabbing' : ''}`}
+            className={`absolute bottom-[-50px] xs:bottom-[-60px] sm:bottom-[-70px] md:bottom-[-60px] left-[40%] sm:left-[40%] md:left-[45%] transform -translate-x-1/2 z-30 cursor-grab ${isDragging ? 'cursor-grabbing' : ''} scale-75 sm:scale-90 md:scale-100`}
             onMouseDown={startDrag}
             onTouchStart={startDrag}
             onClick={handlePhoneClick}
@@ -606,7 +614,7 @@ const DraggableContact: React.FC = () => {
               <div className="absolute inset-0 bg-cyan-500/20 rounded-full animate-pulse scale-105"></div>
               
               {/* 电话图标 */}
-              <div className="relative text-5xl md:text-6xl lg:text-7xl animate-phone-shake" style={{ color: '#0DD3CA' }}>
+              <div className="relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl animate-phone-shake" style={{ color: '#0DD3CA' }}>
                 {contactMethods[1].icon}
               </div>
               
@@ -618,7 +626,7 @@ const DraggableContact: React.FC = () => {
           </div>
           
           {/* GitHub图标 */}
-          <div className="absolute left-[10%] top-1/2 transform rotate-6 animate-float-slow">
+          <div className="absolute left-[5%] sm:left-[10%] top-1/2 transform rotate-6 animate-float-slow scale-75 sm:scale-90 md:scale-100">
             {contactMethods[2].icon && (
               <a 
                 href={contactMethods[2].href}
@@ -626,7 +634,7 @@ const DraggableContact: React.FC = () => {
                 rel="noopener noreferrer"
                 className="cursor-pointer hover:scale-110 transition-transform duration-300 block"
               >
-                <div className="text-5xl md:text-6xl lg:text-7xl" style={{ color: contactMethods[2].color }}>
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl" style={{ color: contactMethods[2].color }}>
                   {contactMethods[2].icon}
                 </div>
               </a>
@@ -634,13 +642,13 @@ const DraggableContact: React.FC = () => {
           </div>
           
           {/* 定位图标 */}
-          <div className="absolute right-[9%] bottom-4 transform rotate-6 animate-float-slow">
+          <div className="absolute right-[5%] sm:right-[9%] bottom-4 transform rotate-6 animate-float-slow scale-75 sm:scale-90 md:scale-100">
             {contactMethods[3].icon && (
               <a 
                 href={contactMethods[3].href}
                 className="cursor-pointer hover:scale-110 transition-transform duration-300 block"
               >
-                <div className="text-5xl md:text-6xl lg:text-7xl" style={{ color: contactMethods[3].color }}>
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl" style={{ color: contactMethods[3].color }}>
                   {contactMethods[3].icon}
                 </div>
               </a>
