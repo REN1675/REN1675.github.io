@@ -10,8 +10,6 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'export',
-  assetPrefix: './',
-  swcMinify: true,
   trailingSlash: true,
 }
 
